@@ -27,9 +27,9 @@ function getQuestions(){
       //add the next question
       addQuestion(questionObject[currentIndex],questionsCount);
       //handle bullets
-      handleBullets();
-      clearInterval(countDown);
+      clearInterval(countInterval);
       countDown(120,questionsCount);
+      handleBullets();
       showResult(questionsCount);
     }
   }
@@ -112,6 +112,9 @@ function showResult(qcount){
     sumbitButton.remove();
     spanBullets.remove();
     counter.remove();
+    document.querySelector(".category").remove();
+    document.body.style.backgroundColor="#FDCEDF";
+    resultsDiv.classList.remove("d-none");
     if(rightAnswers>(qcount/2) && rightAnswers<qcount){
       resultsDiv.innerHTML=`<span class="Good">Good</span>, You Got ${rightAnswers} out of ${qcount}`;
     }else if(rightAnswers===qcount){
@@ -126,8 +129,8 @@ function countDown(duration,qcount){
   if(currentIndex<qcount){
     let minutes,seconds;
     countInterval=setInterval(function(){
-      let minutes=parseInt(duration/60);
-      let seconds=parseInt(duration%60);
+      minutes=parseInt(duration/60);
+      seconds=parseInt(duration%60);
       minutes=minutes<10?`0${minutes}`:minutes;
       seconds=seconds<10?`0${seconds}`:seconds;
       counter.innerHTML=`${minutes}:${seconds}`;
@@ -138,3 +141,6 @@ function countDown(duration,qcount){
     },1000)
   }
 }
+// function addQNumber(number){
+//   qNumber.appendChild(document.createTextNode(number));
+// }

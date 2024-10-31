@@ -15,7 +15,7 @@ body{
 
 @media(max-width:767px){
     .quiz-app{
-        max-width:450px;
+        max-width:350px;
     }
     .quiz-info{
         font-size: 14px;
@@ -24,7 +24,12 @@ body{
 .quiz-info .category{
     border-bottom:3px solid #FDCEDF;;
     padding-bottom:5px;
-    font-size:17px;
+    font-size:18px;
+}
+@media(max-width:767px){
+    .quiz-info .category{
+        font-size:14px;
+    }
 }
 .quiz-area{
     height:120px;
@@ -35,23 +40,18 @@ body{
     position:relative;
 }
 .quiz-area h2{
+
     margin-top:15px;
     margin-bottom: 15px;
 }
-/* .q-number{
-    position:absolute;
-    padding:20px;
-    font-weight: bold;
-    font-size: 20px;
-    left:50%;
-    transform: translate(-50%);
-    top:-25px;
-    background-color: #fff;
-    width:50px;
-    height:50px;
-    border-radius: 50%;
-    border:solid 5px #FDCEDF;
-} */
+@media(max-width:767px){
+    .quiz-area{
+        height:80px;
+    }
+    .quiz-area h2{
+        font-size:16px;
+    }
+}
 .answers-area{
     margin-top:40px;
 }
@@ -72,6 +72,11 @@ body{
 }
 .answers-area label{
     font-size:18px;
+}
+@media(max-width:767px){
+    .answers-area label{
+        font-size:14px;
+    }
 }
 .answer{
     display: flex;
@@ -101,6 +106,12 @@ body{
  .submit-button:focus {
     outline: none;
 }
+@media(max-width:767px){
+    .submit-button{
+        font-size: 12px;
+        padding:5px;
+    }
+}
 .bullets .spans{
     flex:1;
 }
@@ -112,6 +123,42 @@ body{
     margin-right: 5px;
     border-radius: 50%;
   }
+  @media(max-width:767px){
+    .bullets .spans span{
+        width:10px;
+        height: 10px;
+    }
+  }
   .bullets .spans span.on{
     background-color: #FDCEDF;
+  }
+  .results{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    width:500px;
+    height:150px;
+    padding:15px;
+    border-radius:5px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size:18px;
+  }
+  .results span{
+    font-weight: bold;
+    font-size: 20px;
+    color:#FDCEDF;
+    margin-right:5px;
+  }
+  @media(max-width:767px){
+    .results{
+        width:300px;
+        height:100px;
+        font-size:14px;
+    }
+    .results span{
+        font-size: 18px;
+    }
   }
