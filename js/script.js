@@ -2,6 +2,7 @@ let bulletsSpansContainer=document.querySelector(".quiz-app .bullets .spans");
 let quizArea=document.querySelector(".quiz-area");
 let answersArea=document.querySelector(".answers-area");
 let sumbitButton=document.querySelector(".submit-button");
+let prevButton=document.querySelector(".prev-button");
 let spanBullets=document.querySelector(".bullets .spans");
 let resultsDiv=document.querySelector(".results");
 let counter=document.querySelector(".countdown");
@@ -16,21 +17,32 @@ function getQuestions(){
     let questionsCount=questionObject.length;
     createBullets(questionsCount);
     addQuestion(questionObject[currentIndex],questionsCount);
+    checkPrev();
     //submit onclick
-    countDown(120,questionsCount);
+    countDown(30,questionsCount);
     sumbitButton.onclick=()=>{
       check(questionObject[currentIndex]);
       currentIndex++;
+      checkPrev();
       //remove question
       quizArea.innerHTML="";
       answersArea.innerHTML="";
       //add the next question
       addQuestion(questionObject[currentIndex],questionsCount);
       //handle bullets
-      clearInterval(countInterval);
-      countDown(120,questionsCount);
-      handleBullets();
+      onHandleBullets();
       showResult(questionsCount);
+    }
+    prevButton.onclick=()=>{
+      checkPrev();
+      rightAnswers--;
+      currentIndex--; 
+      checkPrev();
+      quizArea.innerHTML="";
+      answersArea.innerHTML="";
+      //add the next question
+      addQuestion(questionObject[currentIndex],questionsCount);
+      offHandleBullets(); 
     }
   }
  };
@@ -73,10 +85,6 @@ if(currentIndex<qcount){
     mainDiv.appendChild(radioInput);
     mainDiv.appendChild(answerLabel);
     answersArea.appendChild(mainDiv);
-    if(i===1){
-      radioInput.checked=true;
-    }
-    
   }
 }
 }
@@ -94,21 +102,33 @@ function check(question){
     rightAnswers++;
   }
 }
-//handle bullets function
-function handleBullets(){
+//handle bullets function add on
+function onHandleBullets(){
   let bullets=document.querySelectorAll(".bullets .spans span");
   let bulletsArray=Array.from(bullets);
   bulletsArray.forEach((bullet,index)=>{
     if(index===currentIndex){
-      bullet.className="on";
+      bullet.classList.add("on");
     }
   })
 }
+//handle bullets function add off
+function offHandleBullets(){
+  let bullets=document.querySelectorAll(".bullets .spans span");
+  let bulletsArray=Array.from(bullets);
+  bulletsArray.forEach((bullet,index)=>{
+    if(index===currentIndex+1){
+      bullet.classList.remove("on");
+    }
+  })
+
+}
 //show result function
-function showResult(qcount){
+function showResult(qcount){ 
   if(currentIndex===qcount){
     quizArea.remove();
     answersArea.remove();
+    prevButton.remove();
     sumbitButton.remove();
     spanBullets.remove();
     counter.remove();
@@ -136,11 +156,18 @@ function countDown(duration,qcount){
       counter.innerHTML=`${minutes}:${seconds}`;
       if(--duration<0){
         clearInterval(countInterval);
+        currentIndex=qcount-1;
         sumbitButton.click();
       }
     },1000)
   }
 }
-// function addQNumber(number){
-//   qNumber.appendChild(document.createTextNode(number));
-// }
+function checkPrev(){
+  if(currentIndex===0){
+    prevButton.classList.add("pointer-none");
+    rightAnswers=0;
+  }else{
+    prevButton.classList.remove("pointer-none");
+  }
+}
+
